@@ -2,14 +2,16 @@ from bs4 import BeautifulSoup
 import requests
 from lxml import html
 
+# Navegação
 class Navegar():
     def __init__(self, url, text):
         self.url = url
-        self.text = str(text.replace(" ", "-"))
+        self.text = str(text.replace(" ", "-")) # troca os espaços do texto digitado por "-"
         self.json = {}
 
+        # Configuração se a url for da americadas
         if self.url == 'https://www.americanas.com.br/':
-            dominio = 'https://www.americanas.com.br'
+            dominio = 'https://www.americanas.com.br'  
             headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36"}
             page = requests.get(f'https://www.americanas.com.br/busca/{self.text}', headers=headers)
             tree = html.fromstring(page.content) 
