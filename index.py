@@ -13,10 +13,11 @@ if __name__ == '__main__':
     urls = Urlss()
 
 
-    text = ' '.join(text)
+    
     identificar = IdentificarTopico(text)
     lista_urls = urls.getUrls(text)
     
+    text = ' '.join(text)
     details = Navegar(lista_urls[0], str(text)).getItem()
     price = details[list(details.keys())[0]]['price']
     link = details[list(details.keys())[0]]['link']

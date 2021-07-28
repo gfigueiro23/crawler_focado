@@ -30,7 +30,8 @@ class IdentificarTopico():
     
     def getTopico(self):
         topico = ''
-        #for x in self.text: self.text[self.text.index(x)] = unidecode(x).lower()
+        for x in self.text: self.text[self.text.index(x)] = unidecode(x).lower()
+        self.text = ' '.join(self.text)
         for x in self.dfe.keys():
             for y in self.dfe[x]:
                 y = unidecode(str(y)).lower()
@@ -54,21 +55,26 @@ class Urlss():
         df = pd.read_json(StringIO(self.json2))
         df.reset_index(inplace=True, drop=True)
         df.to_excel('urls.xlsx', index=False)
-        print(self.file)
     
     def getUrls(self, text):
         self.text =  text
-        self.topico = IdentificarTopico(self.text).getTopico()
-        urlsexcel = pd.read_excel('urls.xlsx')
-        self.topico = self.topico.lower()
-        list_urls = []
-        if self.topico in urlsexcel:
-            for x in urlsexcel[self.topico]:
-                list_urls.append(x) 
+        teste = ' '.join(self.text)
+        if teste != IdentificarTopico(self.text).getTopico():
+            self.text =  text
+            teste = ' '.join(self.text)
+            self.topico = IdentificarTopico(self.text).getTopico()
+            urlsexcel = pd.read_excel('urls.xlsx')
+            self.topico = self.topico.lower()
+            list_urls = []
+            if self.topico in urlsexcel:
+                for x in urlsexcel[self.topico]:
+                    list_urls.append(x)            
+                    
+            return list_urls
         else:
-            list_urls = ['https://www.americanas.com.br']               
-                
-        return list_urls
+            list_urls = ['https://www.americanas.com.br/']
+            return list_urls
+            
         
     
 
